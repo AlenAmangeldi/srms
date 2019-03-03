@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import com.srmsproject.dao.StudentRepository;
+import com.srmsproject.repository.StudentRepository;
 import com.srmsproject.model.Student;
 
 @Controller
