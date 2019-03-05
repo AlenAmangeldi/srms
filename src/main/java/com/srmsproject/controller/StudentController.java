@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.boot.context.config.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,9 +64,16 @@ public class StudentController {
 	@GetMapping(value="/studlist")
 	public String studList(@ModelAttribute Student newStudent, Model model){
 		model.addAttribute("students", studentRepository.findAll());
+
 		return "studlist";
 	}
-	
+	@GetMapping(value="/studDel/{id}")
+	public String studDel(@PathVariable("id") long id, Model model){
+		studentRepository.delete(id);
+		model.addAttribute("students", studentRepository.findAll());
+		return "redirect:/studlist";
+	}
+
 	public String checkNullString(String str){
 		String endString = null;
 		if(str == null || str.isEmpty()){
@@ -78,7 +87,7 @@ public class StudentController {
 		return endString;
 		
 	}
-	@GetMapping(path = "/all")
+	@GetMapping(path = "/studInsert")
 	public @ResponseBody String addStudent(@RequestParam String name, @RequestParam String email,@RequestParam String password,@RequestParam String comments){
 		Student s = new Student();
 		s.setName(name);
@@ -88,6 +97,15 @@ public class StudentController {
 		studentRepository.save(s);
 		return "Saved";
 	}
+//	@DeleteMapping("/notes/{id}")
+//	public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
+//		Student student = studentRepository.findOne(noteId);
+//
+//		studentRepository.delete(student);
+//
+//		return ResponseEntity.ok().build();
+//	}
+
 //	@GetMapping(path="/all")
 //	public @ResponseBody Iterable<Student> getAllUsers() {
 //		// This returns a JSON or XML with the users

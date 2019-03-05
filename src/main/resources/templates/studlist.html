@@ -13,7 +13,7 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Welcome </a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Welcome</a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -105,19 +105,24 @@
                     <table class="table datatable">
                         <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Password</th>
                             <th>Comments</th>
+                            <th>Manage</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="student : ${students}">
+                            <td th:text="${student.id}">Text ...</td>
                             <td th:text="${student.name}">Text ...</td>
                             <td th:text="${student.email}">Text ...</td>
                             <td th:text="${student.password}">Text ...</td>
                             <!--<td th:text="${student.subscribe}">Text ...</td>-->
                             <td th:text="${student.comments}">Text ...</td>
+                            <td><a th:href="@{/studDel/{id}(id=${student.id})}">Delete</a></td>
+                            <!--<td><a th:href="@{/edit/{id}(id=${student.id})}">Update</a></td>-->
                         </tr>
                         </tbody>
                     </table>
