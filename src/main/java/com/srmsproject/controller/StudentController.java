@@ -10,14 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import com.srmsproject.repository.StudentRepository;
 import com.srmsproject.model.Student;
 
 @Controller
+@RequestMapping(value = "/")
 public class StudentController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -33,7 +31,6 @@ public class StudentController {
 			return "index";
 		} else {
 			model.addAttribute("student", newStudent);
-
 			if (newStudent.getName() != null) {
 				try {
 					String comments = checkNullString(newStudent.getComments());
@@ -47,7 +44,6 @@ public class StudentController {
 				}
 				studentRepository.save(newStudent);
 			}
-
 			return "thanks";
 		}
 	}
@@ -55,7 +51,6 @@ public class StudentController {
 	@GetMapping(value="thanks")
 	public String thankYou(@ModelAttribute Student newStudent, Model model){
 		model.addAttribute("student",newStudent);
-		
 		return "thanks";
 	}
 	@GetMapping(value="/")
@@ -66,7 +61,7 @@ public class StudentController {
 	}
 	@GetMapping(value="/studlist")
 	public String studList(@ModelAttribute Student newStudent, Model model){
-		model.addAttribute("student", newStudent);
+		model.addAttribute("students", studentRepository.findAll());
 		return "studlist";
 	}
 	
@@ -83,5 +78,21 @@ public class StudentController {
 		return endString;
 		
 	}
+	@GetMapping(path = "/all")
+	public @ResponseBody String addStudent(@RequestParam String name, @RequestParam String email,@RequestParam String password,@RequestParam String comments){
+		Student s = new Student();
+		s.setName(name);
+		s.setEmail(email);
+		s.setPassword(password);
+		s.setComments(comments);
+		studentRepository.save(s);
+		return "Saved";
+	}
+//	@GetMapping(path="/all")
+//	public @ResponseBody Iterable<Student> getAllUsers() {
+//		// This returns a JSON or XML with the users
+//		return studentRepository.findAll();
+//	}
+
 
 }

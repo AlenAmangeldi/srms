@@ -1,9 +1,6 @@
 package com.srmsproject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -11,6 +8,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+@Table(name = "students")
 public class Student {
 
 	@Id
@@ -22,8 +20,10 @@ public class Student {
 	@Email
     @NotBlank(message = "@Domen is required")
 	private String email;
-	private Boolean active;
-	private Boolean subscribe;
+	@NotBlank(message = "Password is required!")
+	private String password;
+//	private Boolean active;
+//	private Boolean subscribe;
 	 @Size(min=0, max=300)
 	private String  comments;
 	
@@ -45,18 +45,27 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Boolean getActive() {
-		return active;
+
+	public String getPassword() {
+		return password;
 	}
-	public void setActive(Boolean active) {
-		this.active = active;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public Boolean getSubscribe() {
-		return subscribe;
-	}
-	public void setSubscribe(Boolean subscribe) {
-		this.subscribe = subscribe;
-	}
+
+	//	public Boolean getActive() {
+//		return active;
+//	}
+//	public void setActive(Boolean active) {
+//		this.active = active;
+//	}
+//	public Boolean getSubscribe() {
+//		return subscribe;
+//	}
+//	public void setSubscribe(Boolean subscribe) {
+//		this.subscribe = subscribe;
+//	}
 	public String getComments() {
 		return comments;
 	}

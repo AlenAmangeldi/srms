@@ -112,8 +112,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Active</th>
-                            <th>Subscribe</th>
+                            <th>Password</th>
+                            <!--<th>Subscribe</th>-->
                             <th>Comments</th>
                         </tr>
                         </thead>
@@ -121,8 +121,8 @@
                         <tr th:each="student : ${student}">
                             <td th:text="${student.name}">Text ...</td>
                             <td th:text="${student.email}">Text ...</td>
-                            <td th:text="${student.active}">Text ...</td>
-                            <td th:text="${student.subscribe}">Text ...</td>
+                            <td th:text="${student.password}">Text ...</td>
+                            <!--<td th:text="${student.subscribe}">Text ...</td>-->
                             <td th:text="${student.comments}">Text ...</td>
                         </tr>
                         </tbody>
