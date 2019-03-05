@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.michaelcgood</groupId>
-	<artifactId>michaelcgood-validation-thymeleaf</artifactId>
+	<groupId>com.srmsproject</groupId>
+	<artifactId>Student Management Registration System</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>michaelcgood-validation-thymeleaf</name>
-	<description>Michael C  Good - Validation in Thymeleaf Example Application</description>
+	<name>Student Management Registration System</name>
+	<description>Student Management Registration System</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
