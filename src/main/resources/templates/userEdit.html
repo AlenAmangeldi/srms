@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/user" method="post">
+    <input type="text" name="username" th:value="${user.username}">
+    <div th:each="role : ${user.roles}">
+        <input name="roles" type="checkbox" th:value="${role}"/>
+        <span th:text="${role}"> default role name</span>
+    </div>
+<input type="hidden" value="${user.id}" name="userId">
+    <!--<input type="hidden" value="${_csrf.token}" name="_csrf">-->
+<button type="submit">Save</button>
+</form>
+</body>
+</html>

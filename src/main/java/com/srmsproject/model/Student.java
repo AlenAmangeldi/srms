@@ -18,7 +18,7 @@ public class Student {
     @NotBlank(message = "Name is required")
 	private String name;
 	@Email
-    @NotBlank(message = "@Domen is required")
+    @NotBlank(message = "@Domain is required")
 	private String email;
 	@NotBlank(message = "Password is required!")
 	private String password;
@@ -54,18 +54,6 @@ public class Student {
 		this.password = password;
 	}
 
-	//	public Boolean getActive() {
-//		return active;
-//	}
-//	public void setActive(Boolean active) {
-//		this.active = active;
-//	}
-//	public Boolean getSubscribe() {
-//		return subscribe;
-//	}
-//	public void setSubscribe(Boolean subscribe) {
-//		this.subscribe = subscribe;
-//	}
 	public String getComments() {
 		return comments;
 	}

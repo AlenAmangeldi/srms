@@ -1,9 +1,7 @@
 package com.srmsproject.controller;
 
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.boot.context.config.ResourceNotFoundException;
@@ -16,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import com.srmsproject.repository.StudentRepository;
 import com.srmsproject.model.Student;
 
+
 @Controller
 @RequestMapping(value = "/")
-public class StudentController {
+public class MainController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -26,11 +25,11 @@ public class StudentController {
 	public String finalString = null;
 	@Autowired
 	private StudentRepository studentRepository;
-	@PostMapping(value="/")
+	@PostMapping(value="/thanks")
 	public String addAStudent(@ModelAttribute @Valid Student newStudent, BindingResult bindingResult, Model model){
 		if (bindingResult.hasErrors()) {
 			System.out.println("BINDING RESULT ERROR");
-			return "index";
+			return "thanks";
 		} else {
 			model.addAttribute("student", newStudent);
 			if (newStudent.getName() != null) {
@@ -49,7 +48,7 @@ public class StudentController {
 			return "thanks";
 		}
 	}
-	
+
 	@GetMapping(value="thanks")
 	public String thankYou(@ModelAttribute Student newStudent, Model model){
 		model.addAttribute("student",newStudent);
@@ -59,7 +58,7 @@ public class StudentController {
 	public String viewTheForm(Model model){
 		Student newStudent = new Student();
 		model.addAttribute("student",newStudent);
-		return "index";
+		return "login";
 	}
 	@GetMapping(value="/studlist")
 	public String studList(@ModelAttribute Student newStudent, Model model){
@@ -85,7 +84,7 @@ public class StudentController {
 
 		}
 		return endString;
-		
+
 	}
 	@GetMapping(path = "/studInsert")
 	public @ResponseBody String addStudent(@RequestParam String name, @RequestParam String email,@RequestParam String password,@RequestParam String comments){
