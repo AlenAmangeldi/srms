@@ -1,23 +1,26 @@
 package com.srmsproject.controller;
 
-import java.util.Optional;
-import javax.validation.Valid;
+import com.srmsproject.model.Student;
+import com.srmsproject.repository.SrmsHomeClient;
+import com.srmsproject.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.boot.context.config.ResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.srmsproject.repository.StudentRepository;
-import com.srmsproject.model.Student;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 
 @Controller
 @RequestMapping(value = "/")
 public class MainController {
+	SrmsHomeClient srmsHomeClient = new SrmsHomeClient();
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 	    binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
@@ -25,7 +28,7 @@ public class MainController {
 	public String finalString = null;
 	@Autowired
 	private StudentRepository studentRepository;
-	@PostMapping(value="/thanks")
+	@PostMapping("studReg")
 	public String addAStudent(@ModelAttribute @Valid Student newStudent, BindingResult bindingResult, Model model){
 		if (bindingResult.hasErrors()) {
 			System.out.println("BINDING RESULT ERROR");
@@ -43,35 +46,57 @@ public class MainController {
 				} catch (Exception e) {
 					System.out.println(e);
 				}
-				studentRepository.save(newStudent);
+				srmsHomeClient.saveStudent(newStudent);
+//				System.out.println(srmsHomeClient);
 			}
-			return "thanks";
+			return "redirect:/";
 		}
 	}
-
 	@GetMapping(value="thanks")
 	public String thankYou(@ModelAttribute Student newStudent, Model model){
 		model.addAttribute("student",newStudent);
 		return "thanks";
 	}
-	@GetMapping(value="/")
+
+	@GetMapping(value="/index")
 	public String viewTheForm(Model model){
 		Student newStudent = new Student();
 		model.addAttribute("student",newStudent);
-		return "login";
+		return "index";
 	}
-	@GetMapping(value="/studlist")
-	public String studList(@ModelAttribute Student newStudent, Model model){
-		model.addAttribute("students", studentRepository.findAll());
+	@GetMapping(value="/index/{id}")
+	public String viewTheUpdateForm(@PathVariable ("id")long id, Model model){
+		Student newStudent;
+		newStudent = srmsHomeClient.getStudentById(id);
+		System.out.println("newStudent = " + newStudent);
+		model.addAttribute("student", newStudent);
+		return "index";
+	}
 
+	@GetMapping(value="/")
+	public String studList(@ModelAttribute Student newStudent, Model model, Pageable pageable){
+		Page<Student> studPage = studentRepository.findAll(pageable);
+		PageWrapper<Student> page = new PageWrapper<Student>(studPage, "/");
+		model.addAttribute("students", page.getContent());
+		model.addAttribute("page", page);
+//		model.addAttribute("students", studentRepository.getAllStudents(pageable));
 		return "studlist";
 	}
+
 	@GetMapping(value="/studDel/{id}")
 	public String studDel(@PathVariable("id") long id, Model model){
-		studentRepository.delete(id);
+		srmsHomeClient.deleteStudent(id);
 		model.addAttribute("students", studentRepository.findAll());
-		return "redirect:/studlist";
+		System.out.println("Studdelete client");
+		return "redirect:/";
 	}
+
+//	@PostMapping(value = "/index/{id}")
+//	public String updateOrder(@PathVariable("id") long id, @Valid Student student, Model model) {
+//		srmsHomeClient.updateStudent(id);
+//		model.addAttribute("students", srmsHomeClient.getAllStudents());
+//		return "redirect:/";
+//	}
 
 	public String checkNullString(String str){
 		String endString = null;
@@ -96,20 +121,5 @@ public class MainController {
 		studentRepository.save(s);
 		return "Saved";
 	}
-//	@DeleteMapping("/notes/{id}")
-//	public ResponseEntity<?> deleteNote(@PathVariable(value = "id") Long noteId) {
-//		Student student = studentRepository.findOne(noteId);
-//
-//		studentRepository.delete(student);
-//
-//		return ResponseEntity.ok().build();
-//	}
-
-//	@GetMapping(path="/all")
-//	public @ResponseBody Iterable<Student> getAllUsers() {
-//		// This returns a JSON or XML with the users
-//		return studentRepository.findAll();
-//	}
-
 
 }

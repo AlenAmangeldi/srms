@@ -30,7 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" th:href="@{/thanks}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                            Dashboard
+                            Dashboard{studlist}
                         </a>
                     </li>
                     <li class="nav-item">
@@ -121,11 +121,46 @@
                             <td th:text="${student.password}">Text ...</td>
                             <!--<td th:text="${student.subscribe}">Text ...</td>-->
                             <td th:text="${student.comments}">Text ...</td>
-                            <td><a th:href="@{/studDel/{id}(id=${student.id})}">Delete</a></td>
-                            <!--<td><a th:href="@{/edit/{id}(id=${student.id})}">Update</a></td>-->
+                            <td><a th:href="@{/studDel/{id}(id=${student.id})}">Delete</a>
+                                <a th:href="@{/index/{id}(id=${student.id})}">Update</a></td>
                         </tr>
+                        <div th:fragment='paginationbar'>
+                            <div class="text-center">
+                                <ul class='pagination pagination-centered'>
+                                    <li th:class="${page.firstPage}?'disabled':''">
+                                        <span th:if='${page.firstPage}'>← First</span>
+                                        <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>←
+                                            First</a>
+                                    </li>
+                                    <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                                        <span th:if='${not page.hasPreviousPage}'>«</span>
+                                        <a th:if='${page.hasPreviousPage}'
+                                           th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'
+                                           title='Go to previous page'>«</a>
+                                    </li>
+                                    <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
+                                        <span th:if='${item.current}' th:text='${item.number}'>1</span>
+                                        <a th:if='${not item.current}'
+                                           th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span
+                                                th:text='${item.number}'>1</span></a>
+                                    </li>
+                                    <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                                        <span th:if='${not page.hasNextPage}'>»</span>
+                                        <a th:if='${page.hasNextPage}'
+                                           th:href='@{${page.url}(page=${page.number},size=${page.size})}'
+                                           title='Go to next page'>»</a>
+                                    </li>
+                                    <li th:class="${page.lastPage}? 'disabled' : ''">
+                                        <span th:if='${page.lastPage}'>Last →</span>
+                                        <a th:if='${not page.lastPage}'
+                                           th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         </tbody>
                     </table>
+
                 </div>
                 </tbody>
             </table>
