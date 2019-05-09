@@ -6,7 +6,9 @@ import com.srmsproject.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,13 +66,24 @@ public class MainController {
 		model.addAttribute("student",newStudent);
 		return "index";
 	}
-	@GetMapping(value="/index/{id}")
-	public String viewTheUpdateForm(@PathVariable ("id")long id, Model model){
-		Student newStudent;
-		newStudent = srmsHomeClient.getStudentById(id);
-		System.out.println("newStudent = " + newStudent);
+	@GetMapping(value="/studUpdate")
+	public String viewTheUpdateForm(Model model, Student newStudent){
+		System.out.println("Хуйня сработала!!");
 		model.addAttribute("student", newStudent);
-		return "index";
+		return "studUpdate";
+	}
+
+	@GetMapping(value="/studUpdate/{id}")
+	public String viewTheUpdateForm(@PathVariable ("id")long id, Model model){
+		Student newStudent = studentRepository.getStudentById(id);
+		model.addAttribute("student", newStudent);
+		return "studUpdate";
+	}
+	@PostMapping(value = "/studUpdate/{id}")
+	public String updateStudent(@PathVariable("id") long id, Model model, Pageable pageable, Student newStudent) {
+		srmsHomeClient.saveStudent(newStudent);
+		model.addAttribute("students", srmsHomeClient.getAllStudents(pageable));
+		return "redirect:/";
 	}
 
 	@GetMapping(value="/")
@@ -90,13 +103,6 @@ public class MainController {
 		System.out.println("Studdelete client");
 		return "redirect:/";
 	}
-
-//	@PostMapping(value = "/index/{id}")
-//	public String updateOrder(@PathVariable("id") long id, @Valid Student student, Model model) {
-//		srmsHomeClient.updateStudent(id);
-//		model.addAttribute("students", srmsHomeClient.getAllStudents());
-//		return "redirect:/";
-//	}
 
 	public String checkNullString(String str){
 		String endString = null;

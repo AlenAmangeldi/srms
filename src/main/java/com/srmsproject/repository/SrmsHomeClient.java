@@ -3,7 +3,7 @@ package com.srmsproject.repository;
 import com.srmsproject.model.Student;
 import com.srmsproject.model.User;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public class SrmsHomeClient {
-    public List<Student> getAllStudents(Pageable pageable) {
+    public List<Student> getAllStudents() {
         try {
             RestTemplate rest = new RestTemplate();
             return rest.exchange("http://localhost:8085/",
@@ -74,7 +74,7 @@ public class SrmsHomeClient {
             urlVariables.put("id", id);
             return rest.getForObject("http://localhost:8085/studUpdate/{id}", Student.class, urlVariables);
         } catch (Exception e) {
-            System.err.println("Exception in SrmsHomeClient deleteStudent(): " + e.getMessage());
+            System.err.println("Exception in SrmsHomeClient updateStudent(): " + e.getMessage());
             e.printStackTrace();
         }
         return null;

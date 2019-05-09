@@ -17,7 +17,12 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" th:href="@{/}">Sign out</a>
+            <a class="nav-link" th:href="@{/logout}">Sign out</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/index}">Add student</a>
         </li>
     </ul>
 </nav>
@@ -28,12 +33,12 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/thanks}">
+                        <a class="nav-link" th:href="@{/thanks}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                            Dashboard{studlist}
+                            Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="#">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                             Student list <span class="sr-only">(current)</span>
@@ -119,45 +124,45 @@
                             <td th:text="${student.name}">Text ...</td>
                             <td th:text="${student.email}">Text ...</td>
                             <td th:text="${student.password}">Text ...</td>
-                            <!--<td th:text="${student.subscribe}">Text ...</td>-->
                             <td th:text="${student.comments}">Text ...</td>
-                            <td><a th:href="@{/studDel/{id}(id=${student.id})}">Delete</a>
-                                <a th:href="@{/index/{id}(id=${student.id})}">Update</a></td>
+                            <td><a th:href="@{/studDel/{id}(id=${student.id})}" class="btn btn-danger btn-xs">Delete</a>
+                                <div id="delbut"><a th:href="@{/studUpdate/{id}(id=${student.id})}" class="btn btn-warning btn-xs">Update</a></div></td>
                         </tr>
+                        <nav aria-label="Page navigation example">
                         <div th:fragment='paginationbar'>
                             <div class="text-center">
                                 <ul class='pagination pagination-centered'>
-                                    <li th:class="${page.firstPage}?'disabled':''">
-                                        <span th:if='${page.firstPage}'>← First</span>
-                                        <a th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>←
-                                            First</a>
+                                    <li class="page-item" th:class="${page.firstPage}?'page-link disabled' :''">
+                                        <span th:if='${page.firstPage}'>First</span>
+                                        <a class="page-link" th:if='${not page.firstPage}' th:href='@{${page.url}(page=0,size=${page.size})}'>First</a>
                                     </li>
-                                    <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
-                                        <span th:if='${not page.hasPreviousPage}'>«</span>
-                                        <a th:if='${page.hasPreviousPage}'
+                                    <li class="page-item" th:class="${page.hasPreviousPage}? '' : 'disabled, page-link'">
+                                        <span th:if='${not page.hasPreviousPage}'> << </span>
+                                        <a class="page-link" th:if='${page.hasPreviousPage}'
                                            th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'
-                                           title='Go to previous page'>«</a>
+                                           title='Go to previous page'> << </a>
                                     </li>
-                                    <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''">
-                                        <span th:if='${item.current}' th:text='${item.number}'>1</span>
-                                        <a th:if='${not item.current}'
-                                           th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span
-                                                th:text='${item.number}'>1</span></a>
+                                    <li class="page-item active" th:each='item : ${page.items}' th:class="${item.current}? 'active, page-item active' : ''">
+                                        <span class="page-link" th:if='${item.current}' th:text='${item.number}'>(current)</span>
+                                        <a class="page-link" th:if='${not item.current}'
+                                           th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'>
+                                            <span th:text='${item.number}'>(current)</span></a>
                                     </li>
-                                    <li th:class="${page.hasNextPage}? '' : 'disabled'">
-                                        <span th:if='${not page.hasNextPage}'>»</span>
-                                        <a th:if='${page.hasNextPage}'
+                                    <li class="page-item" th:class="${page.hasNextPage}? '' : 'disabled, page-link'">
+                                        <span th:if='${not page.hasNextPage}'> >> </span>
+                                        <a class="page-link" th:if='${page.hasNextPage}'
                                            th:href='@{${page.url}(page=${page.number},size=${page.size})}'
-                                           title='Go to next page'>»</a>
+                                           title='Go to next page'> >> </a>
                                     </li>
-                                    <li th:class="${page.lastPage}? 'disabled' : ''">
-                                        <span th:if='${page.lastPage}'>Last →</span>
-                                        <a th:if='${not page.lastPage}'
-                                           th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last →</a>
+                                    <li class="page-item" th:class="${page.lastPage}? 'page-link disabled' : ''">
+                                        <span th:if='${page.lastPage}'>Last</span>
+                                        <a class="page-link" th:if='${not page.lastPage}'
+                                           th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+                        </nav>
                         </tbody>
                     </table>
 
@@ -185,6 +190,21 @@
 <!-- Graphs -->
 <script src="Chart.min.js"></script>
 <script>
+    // Get the modal
+    var modal = document.getElementById('delbut');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<script>
+
+
+
+
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: 'line',

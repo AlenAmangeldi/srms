@@ -11,4 +11,5 @@ import org.springframework.ui.Model;
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Long> {
     Page<Student> findAll(Pageable pageable);
+    Student getStudentById(long id);
 }
