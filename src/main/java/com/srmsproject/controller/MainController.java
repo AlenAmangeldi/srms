@@ -1,8 +1,12 @@
 package com.srmsproject.controller;
 
+import com.srmsproject.model.Groups;
 import com.srmsproject.model.Student;
+import com.srmsproject.model.User;
 import com.srmsproject.repository.SrmsHomeClient;
 import com.srmsproject.repository.StudentRepository;
+import com.srmsproject.repository.UserRepository;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -30,6 +36,7 @@ public class MainController {
 	public String finalString = null;
 	@Autowired
 	private StudentRepository studentRepository;
+	private UserRepository userRepository;
 	@PostMapping("studReg")
 	public String addAStudent(@ModelAttribute @Valid Student newStudent, BindingResult bindingResult, Model model){
 		if (bindingResult.hasErrors()) {
@@ -49,11 +56,44 @@ public class MainController {
 					System.out.println(e);
 				}
 				srmsHomeClient.saveStudent(newStudent);
-//				System.out.println(srmsHomeClient);
 			}
 			return "redirect:/";
 		}
 	}
+
+	@PostMapping("groupAdd")
+	public String groupAdd(@ModelAttribute @Valid Groups group, Model model){
+		model.addAttribute("group", group);
+		srmsHomeClient.saveGroups(group);
+		return "groupAdd";
+	}
+
+	@GetMapping(value="/groupAdd")
+	public String viewGroupAdd(Model model){
+		Groups group = new Groups();
+		model.addAttribute("group", group);
+		return "groupAdd";
+	}
+
+	@GetMapping(value="/groupList")
+	public String groupList(@ModelAttribute Groups groups, Model model, Pageable pageable){
+//		Page<Groups> groupPage = srmsHomeClient.getAllGroups(pageable);
+//		PageWrapper<Groups> page = new PageWrapper<Groups>(groupPage, "/groupList");
+//		model.addAttribute("groups", page.getContent());
+//		model.addAttribute("page", page);
+		return "groupList";
+	}
+
+//	@GetMapping(value="/")
+//	public String studList(@ModelAttribute Student newStudent, Model model, Pageable pageable){
+//		Page<Student> studPage = studentRepository.findAll(pageable);
+//		PageWrapper<Student> page = new PageWrapper<Student>(studPage, "/");
+//		model.addAttribute("students", page.getContent());
+//		model.addAttribute("page", page);
+//		return "studlist";
+//	}
+
+
 	@GetMapping(value="thanks")
 	public String thankYou(@ModelAttribute Student newStudent, Model model){
 		model.addAttribute("student",newStudent);
@@ -68,12 +108,11 @@ public class MainController {
 	}
 	@GetMapping(value="/studUpdate")
 	public String viewTheUpdateForm(Model model, Student newStudent){
-		System.out.println("Хуйня сработала!!");
 		model.addAttribute("student", newStudent);
 		return "studUpdate";
 	}
 
-	@GetMapping(value="/studUpdate/{id}")
+	@GetMapping(value = "/studUpdate/{id}")
 	public String viewTheUpdateForm(@PathVariable ("id")long id, Model model){
 		Student newStudent = studentRepository.getStudentById(id);
 		model.addAttribute("student", newStudent);
@@ -82,7 +121,7 @@ public class MainController {
 	@PostMapping(value = "/studUpdate/{id}")
 	public String updateStudent(@PathVariable("id") long id, Model model, Pageable pageable, Student newStudent) {
 		srmsHomeClient.saveStudent(newStudent);
-		model.addAttribute("students", srmsHomeClient.getAllStudents(pageable));
+		model.addAttribute("students", srmsHomeClient.getAllStudents());
 		return "redirect:/";
 	}
 
@@ -92,8 +131,17 @@ public class MainController {
 		PageWrapper<Student> page = new PageWrapper<Student>(studPage, "/");
 		model.addAttribute("students", page.getContent());
 		model.addAttribute("page", page);
-//		model.addAttribute("students", studentRepository.getAllStudents(pageable));
 		return "studlist";
+	}
+
+	@GetMapping(value="/studlistUser")
+	public String studListUser(@ModelAttribute Student newStudent, Model model, Pageable pageable){
+		Page<Student> studPage = studentRepository.findAll(pageable);
+		PageWrapper<Student> page = new PageWrapper<Student>(studPage, "/");
+		model.addAttribute("students", page.getContent());
+		model.addAttribute("page", page);
+//		model.addAttribute("students", studentRepository.getAllStudents(pageable));
+		return "studlistUser";
 	}
 
 	@GetMapping(value="/studDel/{id}")
@@ -126,6 +174,32 @@ public class MainController {
 		s.setComments(comments);
 		studentRepository.save(s);
 		return "Saved";
+	}
+
+	@PostMapping("filter")
+	public String filter(@RequestParam String filter, Map<String, Object> model){
+		List<Student> students = studentRepository.findByNameContaining(filter);
+		model.put("students", students);
+		return "studlist";
+	}
+
+    @GetMapping(value = "/studPage")
+    public String pageView(Model model, Student newStudent){
+        model.addAttribute("student", newStudent);
+        return "studPage";
+    }
+
+	@GetMapping(value = "/studPage/{id}")
+	public String openPage(@PathVariable("id") long id, Model model){
+		Student newStudent = srmsHomeClient.getStudentById(id);
+		model.addAttribute("students", newStudent);
+		return "studPage";
+	}
+	@GetMapping(value = "/userlist")
+	public String userList(User user, Model model){
+		model.addAttribute("users", user);
+		userRepository.findAll();
+		return "userlist";
 	}
 
 }

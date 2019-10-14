@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+    <title>Dashboard Template for Bootstrap</title>
+    <link href="../bootstrap.min.css" rel="stylesheet">
+    <link href="../dashboard.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
+
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Welcome</a>
+    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" th:href="@{/}">Sign out</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/thanks}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            Student list <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="table-responsive" style="margin-left:260px; margin-top:-700px;">
+            <div class="column">
+
+
+
+                <!--PAGE BEGINS-->
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-sm-3 well">
+                            <div class="well" th:each="student : ${students}">
+                                <p><a href="#"><span th:text="${student.name}"/></a></a></p>
+                                <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+                            </div>
+                            <div class="well">
+                                <p><a href="#">Interests</a></p>
+                                <p>
+                                    <span class="label label-default">News</span>
+                                    <span class="label label-primary">W3Schools</span>
+                                    <span class="label label-success">Labels</span>
+                                    <span class="label label-info">Football</span>
+                                    <span class="label label-warning">Gaming</span>
+                                    <span class="label label-danger">Friends</span>
+                                </p>
+                            </div>
+                            <div class="alert alert-success fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                <p><strong>Ey!</strong></p>
+                                People are looking at your profile. Find out who.
+                            </div>
+                            <p><a href="#">Link</a></p>
+                            <p><a href="#">Link</a></p>
+                            <p><a href="#">Link</a></p>
+                        </div>
+                        <div class="col-sm-7">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default text-left">
+                                        <div class="panel-body">
+                                            <p contenteditable="true">Status: Feeling Blue</p>
+                                            <button type="button" class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-thumbs-up"></span> Like
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="well">
+                                        <p>John</p>
+                                        <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="well">
+                                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="well">
+                                        <p>Bo</p>
+                                        <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="well">
+                                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="well">
+                                        <p>Jane</p>
+                                        <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="well">
+                                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="well">
+                                        <p>Anja</p>
+                                        <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="well">
+                                        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 well">
+                            <div class="thumbnail">
+                                <p>Upcoming Events:</p>
+                                <img src="paris.jpg" alt="Paris" width="400" height="300">
+                                <p><strong>Paris</strong></p>
+                                <p>Fri. 27 November 2015</p>
+                                <button class="btn btn-primary">Info</button>
+                            </div>
+                            <div class="well">
+                                <p>ADS</p>
+                            </div>
+                            <div class="well">
+                                <p>ADS</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--                <table class="table datatable">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>Id</th>-->
+<!--                        <th>Name</th>-->
+<!--                        <th>Email</th>-->
+<!--                        <th>Password</th>-->
+<!--                        <th>Comments</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+
+<!--                    <tr th:each="student : ${students}">-->
+<!--                        <td th:text="${student.id}">Text ...</td>-->
+<!--                        <td th:text="${student.name}">Text ...</td>-->
+<!--                        <td th:text="${student.email}">Text ...</td>-->
+<!--                        <td th:text="${student.password}">Text ...</td>-->
+<!--                        <td th:text="${student.comments}">Text ...</td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!--<script src="src/main/resources/static/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<script>window.jQuery || document.write('<script src="../jquery-slim.min.js"><\/script>')</script>
+<!--<script src="src/main/resources/static/popper.min.js"></script>-->
+<!--<script src="src/main/resources/static/bootstrap.min.js"></script>-->
+
+<!-- Icons -->
+<script src="../feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script src="../Chart.min.js"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                lineTension: 0,
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: 4,
+                pointBackgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false,
+            }
+        }
+    });
+</script>
+
+
+</body></html>
