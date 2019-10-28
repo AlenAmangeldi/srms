@@ -1,13 +1,12 @@
 package com.srmsproject.repository;
 
-import com.srmsproject.model.Groups;
+import com.srmsproject.model.Group;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.srmsproject.model.Student;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -17,5 +16,5 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     Student getStudentById(long id);
     List<Student> findByNameContaining(String name);
 
-    void save(Groups group);
+    void save(Group group);
 }

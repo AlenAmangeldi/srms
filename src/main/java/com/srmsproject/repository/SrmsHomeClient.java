@@ -1,6 +1,6 @@
 package com.srmsproject.repository;
 
-import com.srmsproject.model.Groups;
+import com.srmsproject.model.Group;
 import com.srmsproject.model.Student;
 import com.srmsproject.model.User;
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,9 +8,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 
 import java.util.ArrayList;
@@ -33,11 +30,11 @@ public class SrmsHomeClient {
         return null;
     }
 
-//    public Page<Groups> getAllGroups(Pageable pageable) {
+//    public Page<Group> getAllGroups(Pageable pageable) {
 //        try {
 //            RestTemplate rest = new RestTemplate();
 //            return rest.exchange("http://localhost:8087/groupList",
-//                    HttpMethod.GET, null, new ParameterizedTypeReference<Page<Groups>>() {})
+//                    HttpMethod.GET, null, new ParameterizedTypeReference<Page<Group>>() {})
 //                    .getBody();
 //        } catch (Exception e) {
 //            System.err.println("Exception in SrmsHomeClient getAllGroups(): " + e.getMessage());
@@ -87,11 +84,11 @@ public class SrmsHomeClient {
     }
 
 
-    public Groups saveGroups(Groups group) {
+    public Group saveGroups(Group group) {
         try {
             RestTemplate rest = new RestTemplate();
             return rest.postForObject("http://localhost:8087/groupAdd",
-                    group, Groups.class);
+                    group, Group.class);
         } catch (Exception e) {
             System.err.println("Exception in SrmsHomeClient saveGroups(): " + e.getMessage());
             e.printStackTrace();

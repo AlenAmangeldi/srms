@@ -157,6 +157,7 @@
 <!--                            <div th:if="${#authorization.expression('hasAuthoritu(''ADMIN'')')}">odmen</div>-->
                             <td><a onclick="document.getElementById('delbut').style.display='block'" class="btn btn-danger btn-xs">Delete</a>
                                 <!-- th:href="@{/studDel/{id}(id=${student.id})}"-->
+
                                 <a th:href="@{/studUpdate/{id}(id=${student.id})}" class="btn btn-warning btn-xs">Update</a></td>
                             <div id="delbut" class="modal modal-content">
                                 <center>Are you sure to delete?</center>

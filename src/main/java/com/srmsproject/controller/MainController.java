@@ -1,18 +1,15 @@
 package com.srmsproject.controller;
 
-import com.srmsproject.model.Groups;
+import com.srmsproject.model.Group;
 import com.srmsproject.model.Student;
 import com.srmsproject.model.User;
 import com.srmsproject.repository.SrmsHomeClient;
 import com.srmsproject.repository.StudentRepository;
 import com.srmsproject.repository.UserRepository;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,7 +59,7 @@ public class MainController {
 	}
 
 	@PostMapping("groupAdd")
-	public String groupAdd(@ModelAttribute @Valid Groups group, Model model){
+	public String groupAdd(@ModelAttribute @Valid Group group, Model model){
 		model.addAttribute("group", group);
 		srmsHomeClient.saveGroups(group);
 		return "groupAdd";
@@ -70,16 +67,16 @@ public class MainController {
 
 	@GetMapping(value="/groupAdd")
 	public String viewGroupAdd(Model model){
-		Groups group = new Groups();
+		Group group = new Group();
 		model.addAttribute("group", group);
 		return "groupAdd";
 	}
 
 	@GetMapping(value="/groupList")
-	public String groupList(@ModelAttribute Groups groups, Model model, Pageable pageable){
-//		Page<Groups> groupPage = srmsHomeClient.getAllGroups(pageable);
-//		PageWrapper<Groups> page = new PageWrapper<Groups>(groupPage, "/groupList");
-//		model.addAttribute("groups", page.getContent());
+	public String groupList(@ModelAttribute Group group, Model model, Pageable pageable){
+//		Page<Group> groupPage = srmsHomeClient.getAllGroups(pageable);
+//		PageWrapper<Group> page = new PageWrapper<Group>(groupPage, "/groupList");
+//		model.addAttribute("group", page.getContent());
 //		model.addAttribute("page", page);
 		return "groupList";
 	}
@@ -195,11 +192,11 @@ public class MainController {
 		model.addAttribute("students", newStudent);
 		return "studPage";
 	}
-	@GetMapping(value = "/userlist")
+	@GetMapping(value = "/userList")
 	public String userList(User user, Model model){
 		model.addAttribute("users", user);
 		userRepository.findAll();
-		return "userlist";
+		return "/userList";
 	}
 
 }
