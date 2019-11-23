@@ -8,8 +8,8 @@
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>Student Management Registration System</name>
-	<description>Student Management Registration System</description>
+	<name>CRM-client</name>
+	<description>CRM-client</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -86,6 +86,10 @@
 			<artifactId>spring-cloud-commons</artifactId>
 			<version>2.1.3.RELEASE</version>
 		</dependency>
+
+
+
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

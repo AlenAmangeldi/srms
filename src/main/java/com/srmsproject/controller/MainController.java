@@ -198,5 +198,17 @@ public class MainController {
 		userRepository.findAll();
 		return "/userList";
 	}
+//	@HystrixCommand(fallbackMethod = "fallbackhello", commandkey = "hello", groupKey = "hello")
+//	@GetMapping("/hello")
+//	public String hello(){
+//		if (RandomUtils.nextBoolean()){
+//			throw new RuntimeException("Failed!");
+//		}
+//
+//		return "hello world";
+//	}
+//	public String fallBackHello(){
+//		return "FallbackHello initiated";
+//	}
 
 }
