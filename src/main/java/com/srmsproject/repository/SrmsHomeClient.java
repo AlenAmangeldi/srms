@@ -102,7 +102,7 @@ public class SrmsHomeClient {
             RestTemplate rest = new RestTemplate();
             Map<String, Long> urlVariables = new HashMap<>();
             urlVariables.put("id", id);
-            return rest.getForObject("http://localhost:8085/studDel/{id}", Student.class, urlVariables);
+            return rest.getForObject("http://Crudpage:8085/studDel/{id}", Student.class, urlVariables);
         } catch (Exception e) {
 //            System.err.println("Exception in SrmsHomeClient deleteStudent(): " + e.getMessage());
             e.printStackTrace();

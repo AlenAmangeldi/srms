@@ -1,0 +1,65 @@
+version: '2.2'
+services:
+  discovery-server:
+    container_name: discovery-server
+    build:
+      context: .
+    image: eureka:latest
+    ports:
+      - 8761:8761
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'adminroot'
+      MYSQL_ROOT_PASSWORD: 'adminroot'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+
+
+
+
+  auth-service-master:
+    container_name: auth-service-master
+    build:
+      context: /Users/alenkassenov/Documents/CRMPROJECT/auth-service-master
+    image: authentication:latest
+    ports:
+      - 9100:9100
+
+  SrmsProjectClient:
+    container_name: SrmsProjectClient
+    build:
+      context: /Users/alenkassenov/Documents/CRMPROJECT/SrmsProjectClient
+    image: order-details:latest
+    ports:
+      - 8082:8082
+
+  CrudPageService:
+    container_name: CrudPageService
+    build:
+      context: /Users/alenkassenov/Documents/CRMPROJECT/CrudPageService
+    image: user-details:latest
+    ports:
+      - 8085:8085
+
+  GroupService:
+    container_name: GroupService
+    build:
+      context: /Users/alenkassenov/Documents/CRMPROJECT/GroupService
+    image: user-details:latest
+    ports:
+      - 8087:8087
+
+  zuul-service:
+    container_name: zuul-service
+    build:
+      context: /Users/alenkassenov/Documents/CRMPROJECT/zuul-server
+    image: zuul-server:latest
+    ports:
+      - 8762:8762
